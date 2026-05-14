@@ -1,0 +1,103 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  blurb: string;
+  status?: 'live' | 'beta' | 'soon';
+  external?: boolean;
+}
+
+const { href, title, blurb, status = 'live', external = true } = Astro.props;
+
+const statusLabel = { live: 'LIVE', beta: 'BETA', soon: 'COMING SOON' }[status];
+---
+
+<a
+  class={`tile tile-${status}`}
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+>
+  <div class="header">
+    <span class="title">{title}</span>
+    <span class="status mono">{statusLabel}</span>
+  </div>
+  <p class="blurb dim">{blurb}</p>
+  <span class="arrow mono">→</span>
+</a>
+
+<style>
+  .tile {
+    position: relative;
+    display: block;
+    padding: 1.75rem;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+    overflow: hidden;
+  }
+
+  .tile::before {
+    /* Accent stripe that slides in on hover. */
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 220ms ease;
+  }
+
+  .tile:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+    background: #181b20;
+  }
+
+  .tile:hover::before {
+    transform: scaleY(1);
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .status {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+  }
+
+  .tile-soon .status { color: var(--text-faint); }
+  .tile-beta  .status { color: var(--warn); }
+
+  .blurb {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .arrow {
+    color: var(--text-faint);
+    transition: color 200ms ease, transform 200ms ease;
+    display: inline-block;
+  }
+
+  .tile:hover .arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+</style>
