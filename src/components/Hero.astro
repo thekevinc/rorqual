@@ -6,9 +6,8 @@
 <section class="hero">
   <p class="kicker mono">RORQUAL</p>
   <h1>
-    Tools for thinking about <span class="accent">money</span>
-    and
-    <span class="accent">markets</span>
+    Tools for <span class="accent">money</span>
+    <span class="nowrap">and <span class="accent">markets</span></span>
   </h1>
   <p class="lede dim">
     A small, deliberately-built collection of analyzers to get you alpha
@@ -33,13 +32,11 @@
     font-size: clamp(2rem, 6vw, 4rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
-    max-width: 18ch;
     margin-bottom: 1.5rem;
   }
 
-  h1 .accent {
-    font-style: italic;
-    font-weight: 400;
+  h1 .nowrap {
+    white-space: nowrap;
   }
 
   .lede {
